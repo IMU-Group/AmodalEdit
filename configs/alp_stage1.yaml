@@ -1,0 +1,61 @@
+seed: 42
+device: cuda
+output_dir: runs/alp_stage1
+
+model:
+  embed_dim: 384
+  num_queries: 32
+  decoder_layers: 4
+  decoder_heads: 12
+  semantic:
+    clip_model: openai/clip-vit-large-patch14
+    pretrained: true
+    use_cls: true
+    freeze: true
+  context:
+    backbone: swin_base_patch4_window7_224
+    pretrained: true
+    cache_dir: null
+    fpn_levels: [1, 2, 3]
+    roi_resolution: 7
+  occlusion:
+    max_occluders: 5
+    iou_thresh: 0.05
+  mask_decoder:
+    enabled: true
+    resolution: 256
+    init_resolution: 32
+    use_context_skip: true
+
+data:
+  root: /data/sunjy/Amodal/datasets/COCOA
+  train_annotation: COCO_amodal_train2014.json
+  val_annotation: COCO_amodal_val2014.json
+  image_size: 512
+  max_objects: 20
+  min_visible_area: 100.0
+  exclude_stuff: true
+  graph_file: null
+  batch_size: 4
+  num_workers: 4
+  augment:
+    train: true
+    val: false
+
+loss:
+  bce_weight: 1.0
+  dice_weight: 5.0
+  occluded_region_weight: 2.0
+  boundary_weight: 2.0
+  visible_weight: 0.5
+
+train:
+  epochs: 100
+  lr: 5.0e-5
+  backbone_lr_scale: 0.1
+  weight_decay: 1.0e-4
+  warmup_epochs: 3
+  min_lr: 1.0e-6
+  amp: true
+  grad_clip: 0.5
+  log_interval: 50

@@ -1,0 +1,67 @@
+seed: 42
+device: cuda
+output_dir: runs/edit_stage2
+
+model:
+  embed_dim: 384
+  num_queries: 32
+  decoder_layers: 4
+  decoder_heads: 12
+  semantic:
+    clip_model: openai/clip-vit-large-patch14
+    pretrained: true
+    use_cls: true
+    freeze: true
+  context:
+    backbone: swin_base_patch4_window7_224
+    pretrained: true
+    cache_dir: null
+    fpn_levels: [1, 2, 3]
+    roi_resolution: 7
+  occlusion:
+    max_occluders: 5
+    iou_thresh: 0.05
+  mask_decoder:
+    enabled: true
+    resolution: 256
+    init_resolution: 32
+    use_context_skip: true
+
+iaa:
+  num_queries: 8
+  num_heads: 8
+  lambda_p: 1.0
+  text_dim: 1280
+  adapter_layers: null
+  adapter_include: null
+
+diffusion:
+  kind: sdxl_instruct_pix2pix
+  pretrained: fusing/instructpix2pix-xl
+  dtype: float16
+  variant: null
+  image_size: 1024
+  vae_slicing: true
+  cache_dir: null
+  disable_progress: true
+
+data:
+  manifest: data/edit_train.jsonl
+  root: null
+  image_size: 512
+  batch_size: 1
+  num_workers: 2
+
+train:
+  epochs: 10
+  lr: 1.0e-4
+  unet_lr: 1.0e-6
+  weight_decay: 1.0e-4
+  amp: true
+  grad_accum: 1
+  grad_clip: 1.0
+  log_interval: 20
+  save_interval: 1
+  train_alp: false
+  train_unet: false
+  instruction_dropout: 0.05
