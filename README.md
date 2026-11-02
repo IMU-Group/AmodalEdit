@@ -15,7 +15,7 @@ We suggest users to use the conda for creating new python environment.
 
 ### Example conda environment setup
 ```bash
-git clone <repo-url>
+git clone https://github.com/IMU-Group/AmodalEdit.git
 cd amodaledit
 conda create -n amodaledit python=3.10
 conda activate amodaledit
