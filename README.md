@@ -1,8 +1,8 @@
 # [AmodalEdit: Advancing Instruction-Based Image Editing via Amodal Scene Layout Perception]()
 
-Official implementation of **AmodalEdit**, from the following paper:
+Official implementation of the following paper:
 
-AmodalEdit: Advancing Instruction-Based Image Editing via Amodal Scene Layout Perception
+AmodalEdit: Advancing Instruction-Based Image Editing via Amodal Scene Layout Perception, ACM MM 2026
 
 [[`Paper`](https://extionkj.github.io/AmodalEdit/static/pdfs/paper.pdf)] [[`Project`](https://extionkj.github.io/AmodalEdit/)]
 
